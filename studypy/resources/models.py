@@ -19,15 +19,20 @@ class Resource(Timestampable, models.Model):
     description = models.CharField('description', max_length=2000)
     added_by = models.ForeignKey(settings.AUTH_USER_MODEL)
     tags = models.ManyToManyField('ResourceTag', verbose_name='tags')
-    rating = models.DecimalField('rating', max_digits=5, decimal_places=4,
+    rating = models.DecimalField('rating', max_digits=2, decimal_places=1,
                                  default=0)
 
     def __str__(self):
         return self.name
 
+    def add_review(self, author, contents, mark):
+        Review.objects.create(resource=self, author=author, mark=mark,
+                              contents=contents)
+
 
 class Review(Timestampable, models.Model):
-    resource = models.ForeignKey('Resource', verbose_name='resource')
+    resource = models.ForeignKey('Resource', verbose_name='resource',
+                                 related_name='reviews')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='author')
     contents = models.TextField('contents')
     mark = models.PositiveIntegerField('mark', choices=MARK_CHOICES)
@@ -44,7 +49,7 @@ class Review(Timestampable, models.Model):
         super(Review, self).save(*args, **kwargs)
         number_of_reviews = Review.objects.count()
         marks_sum = Review.objects.filter(
-            resource=self.resource).aggregate(models.Sum('mark'))
+            resource=self.resource).aggregate(models.Sum('mark'))['mark__sum']
         self.resource.rating = marks_sum / number_of_reviews
         self.resource.save()
 
