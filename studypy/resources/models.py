@@ -20,7 +20,7 @@ class Resource(Timestampable, models.Model):
     tags = models.ManyToManyField('ResourceTag', verbose_name='tags')
 
 
-class Review(models.Model):
+class Review(Timestampable, models.Model):
     resource = models.ForeignKey('Resource', verbose_name='resource')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='author')
     contents = models.TextField('contents')
