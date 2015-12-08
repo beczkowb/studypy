@@ -4,9 +4,9 @@
             <div class="col-xs-7">
                 <p>{{ resource.name }}</p>
             </div>
-            <div class="col-xs-1"> 5/5 </div>
+            <div class="col-xs-1"><p>{{ resource.rating|floatformat }}/5</p></div>
             <div class="col-xs-2"> Added by: {{ resource.added_by }} </div>
-            <div class="col-xs-2"> Added by: {{ resource.created_at }} </div>
+            <div class="col-xs-2"> Added at: {{ resource.created_at|date }} </div>
         </div>
     {% endfor %}
 {% endfor %}

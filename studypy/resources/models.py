@@ -4,6 +4,7 @@ from django.conf import settings
 from utils.models import Timestampable
 
 MARK_CHOICES = (
+    (0, 0),
     (1, 1),
     (2, 2),
     (3, 3),
@@ -18,6 +19,8 @@ class Resource(Timestampable, models.Model):
     description = models.CharField('description', max_length=2000)
     added_by = models.ForeignKey(settings.AUTH_USER_MODEL)
     tags = models.ManyToManyField('ResourceTag', verbose_name='tags')
+    rating = models.DecimalField('rating', max_digits=5, decimal_places=4,
+                                 default=0)
 
     def __str__(self):
         return self.name
@@ -36,6 +39,14 @@ class Review(Timestampable, models.Model):
         return '{resource}=>{author}({mark})'.format(resource=self.resource,
                                                      author=self.author,
                                                      mark=self.mark)
+
+    def save(self, *args, **kwargs):
+        super(Review, self).save(*args, **kwargs)
+        number_of_reviews = Review.objects.count()
+        marks_sum = Review.objects.filter(
+            resource=self.resource).aggregate(models.Sum('mark'))
+        self.resource.rating = marks_sum / number_of_reviews
+        self.resource.save()
 
 
 class ResourceTag(models.Model):
