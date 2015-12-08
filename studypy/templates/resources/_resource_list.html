@@ -1,0 +1,12 @@
+{% for resource in resources %}
+    {% for resource in resources %}
+        <div class="row">
+            <div class="col-xs-7">
+                <p>{{ resource.name }}</p>
+            </div>
+            <div class="col-xs-1"> 5/5 </div>
+            <div class="col-xs-2"> Added by: {{ resource.added_by }} </div>
+            <div class="col-xs-2"> Added by: {{ resource.created_at }} </div>
+        </div>
+    {% endfor %}
+{% endfor %}

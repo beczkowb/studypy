@@ -1,0 +1,7 @@
+{% extends '__base.html' %}
+
+{% block body %}
+    <div class="container">
+        {% include 'resources/_resource_list.html' with resources=resources %}
+    </div>
+{% endblock body %}

@@ -1,6 +1,7 @@
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.dirname(BASE_DIR)
 
 
 SECRET_KEY = 'k60e91sh^8s!-62dlwj3fwr-#n@1$z-^y8ne87@7f=4zs%cw^!'
@@ -84,5 +85,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+
+STATIC_PATH = os.path.join(BASE_DIR, 'static')
+
+STATIC_ROOT = os.path.join(DATA_DIR, 'static')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATICFILES_DIRS = (
+    STATIC_PATH,
+)
 
 AUTH_USER_MODEL = 'users.User'

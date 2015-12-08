@@ -13,8 +13,8 @@ MARK_CHOICES = (
 
 
 class Resource(Timestampable, models.Model):
-    name = models.CharField('name', unique=True, max_length=100)
-    url = models.URLField('resource url', blank=True)
+    name = models.CharField('name', unique=True, max_length=50)
+    url = models.URLField('resource url', unique=True)
     description = models.CharField('description', max_length=2000)
     added_by = models.ForeignKey(settings.AUTH_USER_MODEL)
     tags = models.ManyToManyField('ResourceTag', verbose_name='tags')

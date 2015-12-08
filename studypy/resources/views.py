@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.views.generic import ListView
 
-# Create your views here.
+from .models import Resource
+
+
+class Index(ListView):
+    model = Resource
+    template_name = 'resources/resources.html'
+    context_object_name = 'resources'
