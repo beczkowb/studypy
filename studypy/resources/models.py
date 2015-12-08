@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 
+from utils.models import Timestampable
+
 MARK_CHOICES = (
     (1, 1),
     (2, 2),
@@ -10,7 +12,7 @@ MARK_CHOICES = (
 )
 
 
-class Resource(models.Model):
+class Resource(Timestampable, models.Model):
     name = models.CharField('name', unique=True, max_length=100)
     url = models.URLField('resource url', blank=True)
     description = models.CharField('description', max_length=2000)

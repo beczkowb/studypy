@@ -20,6 +20,7 @@ INSTALLED_APPS = (
 
     'resources',
     'users',
+    'utils',
 )
 
 MIDDLEWARE_CLASSES = (
