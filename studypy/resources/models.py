@@ -19,6 +19,9 @@ class Resource(Timestampable, models.Model):
     added_by = models.ForeignKey(settings.AUTH_USER_MODEL)
     tags = models.ManyToManyField('ResourceTag', verbose_name='tags')
 
+    def __str__(self):
+        return self.name
+
 
 class Review(Timestampable, models.Model):
     resource = models.ForeignKey('Resource', verbose_name='resource')
@@ -29,6 +32,14 @@ class Review(Timestampable, models.Model):
     class Meta:
         unique_together = (('resource', 'author'),)
 
+    def __str__(self):
+        return '{resource}=>{author}({mark})'.format(resource=self.resource,
+                                                     author=self.author,
+                                                     mark=self.mark)
+
 
 class ResourceTag(models.Model):
     name = models.CharField('name', max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
