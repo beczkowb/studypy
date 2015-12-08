@@ -26,6 +26,9 @@ class Review(models.Model):
     contents = models.TextField('contents')
     mark = models.PositiveIntegerField('mark', choices=MARK_CHOICES)
 
+    class Meta:
+        unique_together = (('resource', 'author'),)
+
 
 class ResourceTag(models.Model):
     name = models.CharField('name', max_length=50, unique=True)
