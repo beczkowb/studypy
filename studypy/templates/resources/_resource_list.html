@@ -1,10 +1,9 @@
 <div class="container-narrow">
-
     {% for resource in resources %}
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    {{ resource.name }}
+                    {{ resource.name }}  ({{ resource.rating }}/5)
                     <strong>
                         <a class="pull-right" href="{{ resource.url }}">
                             Go to resource
@@ -20,7 +19,12 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="panel-footer">Added by: {{ resource.added_by }} at {{ resource.created_at|date }}</div>
+            <div class="panel-footer">
+                <p class="pull-right">Reviews ({{ resource.number_of_reviews }})</p>
+                <p>
+                    Added by: {{ resource.added_by }} at {{ resource.created_at|date }}
+                </p>
+            </div>
         </div>
     {% endfor %}
 </div>
