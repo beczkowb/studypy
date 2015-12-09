@@ -36,7 +36,7 @@ class Resource(Timestampable, models.Model):
         pass
 
     @classmethod
-    def get_new(cls):
+    def get_newest(cls):
         return cls.objects.order_by('-created_at')
 
 

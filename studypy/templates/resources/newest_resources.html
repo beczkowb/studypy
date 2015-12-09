@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="container">
-        {% include 'resources/_resource_list_nav.html' %}
+        {% include 'resources/_resource_list_nav.html' with newest='active' only %}
         {% include 'resources/_resource_list.html' with resources=resources %}
     </div>
 {% endblock body %}
