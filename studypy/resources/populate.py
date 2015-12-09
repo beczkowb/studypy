@@ -1,3 +1,5 @@
+import string
+
 from django.contrib.auth import get_user_model
 
 from . import models
@@ -11,6 +13,10 @@ tag6 = models.ResourceTag.objects.create(name='best practises')
 tag7 = models.ResourceTag.objects.create(name='websevelopment')
 tag8 = models.ResourceTag.objects.create(name='html')
 tag9 = models.ResourceTag.objects.create(name='css')
+tag9 = models.ResourceTag.objects.create(name='bootstrap')
+
+for c in string.ascii_letters:
+    models.ResourceTag.objects.create(name=c)
 
 user = get_user_model().objects.create_user(username='admin',
                                             password='admin',

@@ -54,3 +54,21 @@ class TestResource(TestCase):
     def test_add_review(self):
         self.resource.add_review(self.user, 'asdfsadf', 5)
         self.assertEqual(self.resource.reviews.count(), 1)
+
+
+class TestResourceTag(TestCase):
+    def setUp(self):
+        self.tags = []
+        for c in 'abcdefghijk':
+            self.tags.append(res_models.ResourceTag.objects.create(name=c))
+
+    def test_get_tags_grid(self):
+        tags = res_models.ResourceTag.objects.order_by('name')
+        expected = [
+            [t for t in self.tags[0:6]],
+            [t for t in self.tags[6:]],
+        ]
+        print(expected)
+        result = res_models.ResourceTag.get_tags_grid(self.tags, 6)
+        print(result)
+        self.assertEqual(expected, result)

@@ -1,0 +1,8 @@
+{% extends '__base.html' %}
+
+{% block body %}
+    <div class="container">
+        {% include 'resources/_tags_grid.html' with tags_grid=tags_grid %}
+        {% include '_pagination.html' with page_obj=page_obj %}
+    </div>
+{% endblock body %}

@@ -1,6 +1,7 @@
 from django.views.generic import ListView
+from django.conf import settings
 
-from .models import Resource
+from .models import Resource, ResourceTag
 
 
 class NewestResources(ListView):
@@ -8,4 +9,20 @@ class NewestResources(ListView):
     template_name = 'resources/newest_resources.html'
     context_object_name = 'resources'
     queryset = Resource.get_newest()
-    paginate_by = 2
+    paginate_by = 3
+
+
+class Tags(ListView):
+    model = ResourceTag
+    template_name = 'resources/tags.html'
+    context_object_name = 'tags'
+    paginate_by = settings.TAGS_PER_PAGE
+
+    def get_context_data(self, **kwargs):
+        context = super(Tags, self).get_context_data(**kwargs)
+        tags = list(context['tags'])
+        context['tags_grid'] = ResourceTag.get_tags_grid(tags,
+                                                         settings.TAGS_PER_ROW)
+        return context
+
+

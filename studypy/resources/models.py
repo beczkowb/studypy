@@ -1,3 +1,5 @@
+import math
+
 from django.db import models
 from django.conf import settings
 
@@ -18,7 +20,8 @@ class Resource(Timestampable, models.Model):
     url = models.URLField('resource url', unique=True)
     description = models.CharField('description', max_length=2000)
     added_by = models.ForeignKey(settings.AUTH_USER_MODEL)
-    tags = models.ManyToManyField('ResourceTag', verbose_name='tags')
+    tags = models.ManyToManyField('ResourceTag', verbose_name='tags',
+                                  related_name='resources')
     rating = models.DecimalField('rating', max_digits=2, decimal_places=1,
                                  default=0)
     number_of_reviews = models.PositiveIntegerField('number of reviews',
@@ -57,10 +60,17 @@ class Review(Timestampable, models.Model):
 
     def save(self, *args, **kwargs):
         super(Review, self).save(*args, **kwargs)
+        self.refresh_resource_rating()
+        self.refresh_resource_number_of_reviews()
+
+    def refresh_resource_rating(self):
         number_of_reviews = Review.objects.count()
         marks_sum = Review.objects.filter(
             resource=self.resource).aggregate(models.Sum('mark'))['mark__sum']
         self.resource.rating = marks_sum / number_of_reviews
+        self.resource.save()
+
+    def refresh_resource_number_of_reviews(self):
         self.resource.number_of_reviews += 1
         self.resource.save()
 
@@ -70,3 +80,18 @@ class ResourceTag(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def number_of_resources(self):
+        return Resource.objects.filter(tags=self).count()
+
+    @classmethod
+    def number_of_tags(cls):
+        return cls.objects.count()
+
+    @classmethod
+    def get_tags_grid(cls, tags, tags_per_row):
+        grid = []
+        for i in range(0, len(tags) - 1, tags_per_row):
+            grid.append(tags[i:i+tags_per_row])
+        return grid

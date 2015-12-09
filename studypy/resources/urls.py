@@ -4,5 +4,6 @@ from . import views
 
 
 urlpatterns = [
-    url('newest/$', views.NewestResources.as_view(), name='newest')
+    url('newest/$', views.NewestResources.as_view(), name='newest'),
+    url('tags/$', views.Tags.as_view(), name='tags'),
 ]
