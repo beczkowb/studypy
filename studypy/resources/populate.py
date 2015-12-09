@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+
 from . import models
 
 tag1 = models.ResourceTag.objects.create(name='python')
