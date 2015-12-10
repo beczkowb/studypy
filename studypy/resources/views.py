@@ -20,7 +20,7 @@ class Tags(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(Tags, self).get_context_data(**kwargs)
-        tags = list(context['tags'])
+        tags = ResourceTag.get_tags_sorted_by_number_of_resources()
         context['tags_grid'] = ResourceTag.get_tags_grid(tags,
                                                          settings.TAGS_PER_ROW)
         return context

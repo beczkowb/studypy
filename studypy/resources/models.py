@@ -1,5 +1,3 @@
-import math
-
 from django.db import models
 from django.conf import settings
 
@@ -83,7 +81,7 @@ class ResourceTag(models.Model):
 
     @property
     def number_of_resources(self):
-        return Resource.objects.filter(tags=self).count()
+        return self.resources.all().count()
 
     @classmethod
     def number_of_tags(cls):
@@ -95,3 +93,8 @@ class ResourceTag(models.Model):
         for i in range(0, len(tags) - 1, tags_per_row):
             grid.append(tags[i:i+tags_per_row])
         return grid
+
+    @classmethod
+    def get_tags_sorted_by_number_of_resources(cls):
+        return sorted(cls.objects.all(),
+                      key=lambda tag: tag.number_of_resources, reverse=True)
