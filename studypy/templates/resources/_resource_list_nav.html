@@ -1,19 +1,27 @@
 <div class="container-narrow">
     <div class="masthead">
-        <ul class="nav nav-tabs pull-right">
-            <li class="{{ hot }}">
-                <a href="">Hot</a>
-            </li>
-            <li class="{{ top_rated }}">
-                <a href="">Top rated</a>
-            </li>
-            <li class="{{ newest }}">
-                <a href="{% url 'newest' %}">Newest</a>
-            </li>
-        </ul>
+        {% if show_resource_list_nav %}
+            <ul class="nav nav-tabs pull-right">
+                <li class="{{ hot }}">
+                    <a href="">Hot</a>
+                </li>
+                <li class="{{ top_rated }}">
+                    <a href="">Top rated</a>
+                </li>
+                <li class="{{ newest }}">
+                    <a href="{% url 'newest' %}">Newest</a>
+                </li>
+            </ul>
+        {% endif %}
         <h1 class="muted">
             <button class="btn btn-success">Add resource</button>
-            <button class="btn btn-primary">Tags</button>
+            {% if show_tags_button %}
+                <a class="btn btn-primary" href="{% url 'tags' %}">Tags</a>
+            {% endif %}
+            {% if show_resources_button %}
+                <a class="btn btn-primary"
+                   href="{% url 'newest' %}">Resources</a>
+            {% endif %}
         </h1>
     </div>
 </div>

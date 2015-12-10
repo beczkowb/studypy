@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="container">
-        {% include 'resources/_resource_list_nav.html' with newest='active' only %}
+        {% include 'resources/_resource_list_nav.html' with newest='active' show_resource_list_nav=True show_tags_button=True  %}
         {% include 'resources/_resource_list.html' with resources=resources %}
         {% include '_pagination.html' with page_obj=page_obj %}
     </div>
