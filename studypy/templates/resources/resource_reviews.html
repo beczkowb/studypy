@@ -1,17 +1,22 @@
 {% extends '__base.html' %}
-
+{% block body %}
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-body">
             {% include 'resources/_resource_panel.html' with resource=resource %}
-            {% for review in reviews %}
+        </div>
+        <div class="list-group">
+            {% for review in resource.reviews.all %}
+                <div class="list-group-item">
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{ review.mark }}</div>
+                    <div class="panel-heading"><strong>{{ review.mark }}/5</strong> Added by: {{ review.author }} at {{ review.created_at|date }}</div>
                     <div class="panel-body">
                         {{ review.contents }}
                     </div>
+                </div>
                 </div>
             {% endfor %}
         </div>
     </div>
 </div>
+{% endblock body %}

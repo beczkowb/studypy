@@ -1,4 +1,4 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.conf import settings
 
 from .models import Resource, ResourceTag
@@ -26,3 +26,7 @@ class Tags(ListView):
         return context
 
 
+class ResourceReviews(DetailView):
+    model = Resource
+    template_name = 'resources/resource_reviews.html'
+    context_object_name = 'resource'
