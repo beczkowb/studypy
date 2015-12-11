@@ -1,7 +1,7 @@
 {% extends '__base.html' %}
 {% block body %}
     <div class="container">
-        {% include 'resources/_resource_list_nav.html' with show_resources_button=True show_tags_button=TrueK %}
+        {% include 'resources/_resource_list_nav.html' with show_resources_button=True show_tags_button=True show_add_review_button=True %}
         <div class="panel panel-default">
             <div class="panel-body">
                 {% include 'resources/_resource_panel.html' with resource=resource %}
