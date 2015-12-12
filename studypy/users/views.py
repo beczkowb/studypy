@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import logout as logout_user
 from django.views.decorators.http import require_http_methods
 
 from .forms import LoginForm
@@ -16,3 +17,11 @@ def login(request):
             return redirect('newest')
         else:
             return render(request, 'users/login.html', {'form': form})
+
+
+@require_http_methods(["GET"])
+def logout(request):
+    if request.user.is_authenticated():
+        logout_user(request)
+        return redirect('newest')
+    return redirect('login')
