@@ -102,3 +102,5 @@ AUTH_USER_MODEL = 'users.User'
 
 TAGS_PER_ROW = 6  # max 12
 TAGS_PER_PAGE = 60
+
+NEWS_PER_PAGE = 10

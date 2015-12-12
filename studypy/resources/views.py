@@ -9,7 +9,7 @@ class NewestResources(ListView):
     template_name = 'resources/newest_resources.html'
     context_object_name = 'resources'
     queryset = Resource.get_newest()
-    paginate_by = 3
+    paginate_by = settings.NEWS_PER_PAGE
 
 
 class Tags(ListView):
