@@ -1,5 +1,6 @@
 from django.views.generic import ListView, DetailView, CreateView
 from django.conf import settings
+from django.core.urlresolvers import reverse_lazy
 
 from .models import Resource, ResourceTag
 from .forms import ResourceForm
@@ -38,4 +39,11 @@ class AddResource(CreateView):
     model = Resource
     template_name = 'resources/add_resource.html'
     form_class = ResourceForm
+    success_url = reverse_lazy('newest')
+
+    def get_form_kwargs(self):
+        kwargs = super(AddResource, self).get_form_kwargs()
+        kwargs['added_by'] = self.request.user
+        return kwargs
+
 

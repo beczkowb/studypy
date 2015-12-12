@@ -15,16 +15,25 @@
 <body>
 {% block body %}
     <div class="container">
-    <br>
-    <br>
-    <br>
+        <br>
+        <br>
+        <br>
+
         <div class="row">
             <div class="col-xs-4">
 
-            </div><!--
-            --><div class="col-xs-4">
+            </div>
+            <!--
+                        -->
+            <div class="col-xs-4">
                 <div class="panel panel-default">
+                                <div class="panel-heading"><h4>Login to Your Account</h4></div>
+
                     <div class="panel-body">
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger"
+                                 role="alert">{{ error }}</div>
+                        {% endfor %}
                         <form action="{% url 'login' %}" method="post">
                             {% csrf_token %}
                             <div class="form-group">
@@ -35,15 +44,15 @@
                                 <label for="{{ form.password.id_for_label }}">Password</label>
                                 {{ form.password }}
                             </div>
-                            <button type="submit" class="btn btn-default">Log
-                                in
+                            <button type="submit" class="btn btn-default">Login
                             </button>
                         </form>
                     </div>
-
                 </div>
-            </div><!--
-            --><div class="col-xs-4">
+            </div>
+            <!--
+                        -->
+            <div class="col-xs-4">
 
             </div>
         </div>

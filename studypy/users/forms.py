@@ -9,8 +9,8 @@ class LoginForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(LoginForm, self).clean()
-        username = cleaned_data['username']
-        password = cleaned_data['password']
+        username = cleaned_data.get('username')
+        password = cleaned_data.get('password')
         user = authenticate(username=username, password=password)
         self.user = user
         if not user:

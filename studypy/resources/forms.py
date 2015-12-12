@@ -5,7 +5,15 @@ from .models import Resource
 
 class ResourceForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        pass
+        self.user = kwargs.pop('added_by', None)
+        kwargs['initial'] = {'added_by': self.user}
+        super(ResourceForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super(ResourceForm, self).clean()
+        user = cleaned_data['added_by']
+        if user != self.user:
+            raise forms.ValidationError("Dont change hidden fields")
 
     class Meta:
         fields = ('url', 'name', 'description', 'added_by')
