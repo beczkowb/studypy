@@ -1,7 +1,8 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from django.conf import settings
 
 from .models import Resource, ResourceTag
+from .forms import ResourceForm
 
 
 class NewestResources(ListView):
@@ -31,3 +32,10 @@ class ResourceReviews(DetailView):
     model = Resource
     template_name = 'resources/resource_reviews.html'
     context_object_name = 'resource'
+
+
+class AddResource(CreateView):
+    model = Resource
+    template_name = 'resources/add_resource.html'
+    form_class = ResourceForm
+

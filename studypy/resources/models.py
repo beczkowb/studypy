@@ -17,9 +17,10 @@ class Resource(Timestampable, models.Model):
     name = models.CharField('name', unique=True, max_length=50)
     url = models.URLField('resource url', unique=True)
     description = models.CharField('description', max_length=2000)
-    added_by = models.ForeignKey(settings.AUTH_USER_MODEL)
     tags = models.ManyToManyField('ResourceTag', verbose_name='tags',
                                   related_name='resources')
+
+    added_by = models.ForeignKey(settings.AUTH_USER_MODEL)
     rating = models.DecimalField('rating', max_digits=2, decimal_places=1,
                                  default=0)
     number_of_reviews = models.PositiveIntegerField('number of reviews',
