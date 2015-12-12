@@ -17,10 +17,11 @@ class Tags(ListView):
     template_name = 'resources/tags.html'
     context_object_name = 'tags'
     paginate_by = settings.TAGS_PER_PAGE
+    queryset = ResourceTag.get_tags_sorted_by_number_of_resources()
 
     def get_context_data(self, **kwargs):
         context = super(Tags, self).get_context_data(**kwargs)
-        tags = ResourceTag.get_tags_sorted_by_number_of_resources()
+        tags = context['tags']
         context['tags_grid'] = ResourceTag.get_tags_grid(tags,
                                                          settings.TAGS_PER_ROW)
         return context
