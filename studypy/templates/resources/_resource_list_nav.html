@@ -17,7 +17,9 @@
             {% if show_add_review_button %}
                 <button class="btn btn-success">Add review</button>
             {% endif %}
-            <button class="btn btn-success">Add resource</button>
+            {% if show_add_resource_button %}
+                <button class="btn btn-success">Add resource</button>
+            {% endif %}
             {% if show_tags_button %}
                 <a class="btn btn-primary" href="{% url 'tags' %}">Tags</a>
             {% endif %}

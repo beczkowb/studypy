@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="container">
-        {% include 'resources/_resource_list_nav.html' with show_resources_button=True %}
+        {% include 'resources/_resource_list_nav.html' with show_add_resource_button=True show_resources_button=True %}
         <br>
         {% include 'resources/_tags_grid.html' with tags_grid=tags_grid show_resource_list_menu=False %}
         {% include '_pagination.html' with page_obj=page_obj %}
