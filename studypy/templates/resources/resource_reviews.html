@@ -1,27 +1,19 @@
 {% extends '__base.html' %}
 {% block body %}
     <div class="container">
-        {% include 'resources/_resource_list_nav.html' with show_resources_button=True show_add_resource_button=True show_tags_button=True show_add_review_button=True %}
-        <div class="panel panel-default">
-            <div class="panel-body">
-                {% include 'resources/_resource_panel.html' with resource=resource %}
+        {% include 'resources/_second_nav.html' with show_resources_button=True show_add_resource_button=True show_tags_button=True show_add_review_button=True %}
+        {% include 'resources/_resource_panel.html' with resource=resource %}
+        {% for review in resource.reviews.all %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>{{ review.mark }}/5</strong>
+                    Added by: {{ review.author }}
+                    at {{ review.created_at|date }}
+                </div>
+                <div class="panel-body">
+                    {{ review.contents }}
+                </div>
             </div>
-            <div class="list-group">
-                {% for review in resource.reviews.all %}
-                    <div class="list-group-item">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <strong>{{ review.mark }}/5</strong>
-                                Added by: {{ review.author }}
-                                at {{ review.created_at|date }}
-                            </div>
-                            <div class="panel-body">
-                                {{ review.contents }}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
+        {% endfor %}
     </div>
 {% endblock body %}
