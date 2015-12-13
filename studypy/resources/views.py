@@ -3,7 +3,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse_lazy
 
 from .models import Resource, ResourceTag
-from .forms import ResourceForm
+from .forms import ResourceForm, ResourceFilterForm
 
 
 class NewestResources(ListView):
@@ -12,6 +12,11 @@ class NewestResources(ListView):
     context_object_name = 'resources'
     queryset = Resource.get_newest()
     paginate_by = settings.NEWS_PER_PAGE
+
+    def get_context_data(self, **kwargs):
+        context = super(NewestResources, self).get_context_data(**kwargs)
+        context['filter_form'] = ResourceFilterForm
+        return context
 
 
 class Tags(ListView):

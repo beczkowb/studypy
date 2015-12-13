@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Resource
+from .models import Resource, ResourceTag
 
 
 class ResourceForm(forms.ModelForm):
@@ -23,3 +23,7 @@ class ResourceForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
         }
+
+
+class ResourceFilterForm(forms.Form):
+    tags = forms.ModelMultipleChoiceField(queryset=ResourceTag.objects.all())

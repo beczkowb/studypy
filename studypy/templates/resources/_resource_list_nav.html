@@ -13,20 +13,9 @@
                 </li>
             </ul>
         {% endif %}
-        <h1 class="muted">
-            {% if show_add_review_button %}
-                <button class="btn btn-success">Add review</button>
-            {% endif %}
-            {% if show_add_resource_button %}
-                <a class="btn btn-success" href="{% url 'add_resource' %}">Add resource</a>
-            {% endif %}
-            {% if show_tags_button %}
-                <a class="btn btn-primary" href="{% url 'tags' %}">Tags</a>
-            {% endif %}
-            {% if show_resources_button %}
-                <a class="btn btn-primary"
-                   href="{% url 'newest' %}">Resources</a>
-            {% endif %}
-        </h1>
+            <form class="muted">
+                {{ filter_form }}
+                <input type="submit">
+            </form>
     </div>
 </div>
