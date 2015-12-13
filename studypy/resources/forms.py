@@ -1,6 +1,6 @@
 from django import forms
 
-from django_select2.widgets import Select2MultipleWidget
+from django_select2.forms import Select2MultipleWidget
 from .models import Resource, ResourceTag
 
 
@@ -28,7 +28,7 @@ class ResourceForm(forms.ModelForm):
 
 class ResourceFilterForm(forms.Form):
     tags = forms.ModelMultipleChoiceField(queryset=ResourceTag.objects.all(),
-                                          widget=Select2MultipleWidget(attrs={'class': 'tags-field'}))
+                                          widget=Select2MultipleWidget())
 
     class Media:
         js = ('js/resources/filter-form.js', )

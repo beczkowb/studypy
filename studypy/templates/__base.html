@@ -11,16 +11,18 @@
           href="{% static 'css/bootstrap-theme.css' %}">
     <link rel="stylesheet" type="text/css"
           href="{% static 'css/nav.css' %}">
+    {% block extrahead %}
+    {% endblock extrahead %}
 </head>
 <body>
 {% include '_nav.html' %}
 {% block body %}
 
 {% endblock body %}
-{% block extrahead %}
-    <script src="{% static 'js/jquery2.js' %}"></script>
+{% block underbody %}
+    <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/bootstrap.js' %}"></script>
-{% endblock extrahead %}
+{% endblock underbody %}
 
 </body>
 </html>

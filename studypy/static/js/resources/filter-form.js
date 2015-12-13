@@ -1,3 +1,3 @@
 $(function(){
-    $('.tags-field').select2();
+    $('.tags-field').djangoSelect2();
 });
