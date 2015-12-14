@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, get_user_model
 
 
 class LoginForm(forms.Form):
@@ -20,3 +20,14 @@ class LoginForm(forms.Form):
         username = self.cleaned_data['username']
         password = self.cleaned_data['password']
         login(request, self.user)
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = get_user_model()
+        fields = ('first_name', 'last_name', 'email', 'image')
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+        }
