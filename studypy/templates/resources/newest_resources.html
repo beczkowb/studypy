@@ -14,10 +14,19 @@
     {{ block.super }}
     {{ filter_form.media }}
     <script>
-        $('.pagination-link').click(function () {
-            var nextPageNumber = this.href.split('?')[1].split('=')[1];
-            var patt = /page=\d/i;
-            console.log(nextPageNumber);
+        $('.pagination-link').click(function (e) {
+            e.preventDefault();
+            var search = window.location.search;
+            var searchObj = querystringToObject(search);
+            console.log(searchObj);
+            var tagsParameters = '';
+            if (searchObj.tags !== undefined){
+                for (var i = 0; searchObj.tags.length > i; i++){
+                    tagsParameters += '&tags=' + searchObj.tags[i];
+                }
+            }
+            alert(this.href + tagsParameters );
+            window.location.href = this.href + tagsParameters;
         });
 
         function querystringToObject(querystring) {
