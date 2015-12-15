@@ -9,4 +9,6 @@ urlpatterns = [
     url('tags/$', views.Tags.as_view(), name='tags'),
     url('(?P<pk>\d+)/reviews/$', views.ResourceReviews.as_view(),
         name='resource_reviews'),
+    url('(?P<pk>\d+)/reviews/add$', views.AddReview.as_view(),
+        name='add_review'),
 ]

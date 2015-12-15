@@ -63,7 +63,7 @@ class Review(Timestampable, models.Model):
         self.refresh_resource_number_of_reviews()
 
     def refresh_resource_rating(self):
-        number_of_reviews = Review.objects.count()
+        number_of_reviews = Review.objects.filter(resource=self.resource).count()
         marks_sum = Review.objects.filter(
             resource=self.resource).aggregate(models.Sum('mark'))['mark__sum']
         self.resource.rating = marks_sum / number_of_reviews

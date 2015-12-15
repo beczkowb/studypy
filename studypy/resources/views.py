@@ -2,8 +2,8 @@ from django.views.generic import ListView, DetailView, CreateView
 from django.conf import settings
 from django.core.urlresolvers import reverse_lazy
 
-from .models import Resource, ResourceTag
-from .forms import ResourceForm, ResourceFilterForm
+from .models import Resource, ResourceTag, Review
+from .forms import ResourceForm, ResourceFilterForm, ReviewForm
 
 
 class NewestResources(ListView):
@@ -71,3 +71,16 @@ class AddResource(CreateView):
         return kwargs
 
 
+class AddReview(CreateView):
+    model = Review
+    template_name = 'resources/add_review.html'
+    form_class = ReviewForm
+
+    def get_form_kwargs(self):
+        kwargs = super(AddReview, self).get_form_kwargs()
+        kwargs['author'] = self.request.user
+        kwargs['resource'] = Resource.objects.get(pk=self.kwargs['pk'])
+        return kwargs
+
+    def get_success_url(self):
+        return reverse_lazy('resource_reviews', kwargs={'pk': self.kwargs['pk']})
