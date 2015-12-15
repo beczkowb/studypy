@@ -38,6 +38,38 @@ class NewestResources(ListView):
         return context
 
 
+class HotResources(ListView):
+    model = Resource
+    template_name = 'resources/hot_resources.html'
+    context_object_name = 'resources'
+    queryset = Resource.get_hot()
+    paginate_by = settings.NEWS_PER_PAGE
+
+    def get_queryset(self):
+        queryset = super(HotResources, self).get_queryset()
+        if self.request.GET and 'tags' in self.request.GET:
+            tags = self.request.GET.getlist('tags')
+            tags_set = set(tags)
+            filtered_resources = []
+            for resource in queryset:
+                resource_tags = list([str(r.id) for r in resource.tags.all()])
+                resource_tags_set = set(resource_tags)
+                if resource_tags_set.intersection(tags_set):
+                    filtered_resources.append(resource)
+            queryset = filtered_resources
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(HotResources, self).get_context_data(**kwargs)
+        if self.request.GET and 'tags' in self.request.GET:
+            tags = self.request.GET.getlist('tags')
+            context['filter_form'] = ResourceFilterForm(initial={'tags': ResourceTag.objects.filter(id__in=tags)})
+        else:
+            context['filter_form'] = ResourceFilterForm()
+
+        return context
+
+
 class Tags(ListView):
     model = ResourceTag
     template_name = 'resources/tags.html'

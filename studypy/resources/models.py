@@ -1,5 +1,8 @@
+import datetime
+
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 
 from utils.models import Timestampable
 
@@ -35,11 +38,22 @@ class Resource(Timestampable, models.Model):
 
     @classmethod
     def get_hot(cls):
-        pass
+        today = timezone.now()
+        delta_month = datetime.timedelta(days=30)
+        resources = cls.objects.filter(created_at__gte=(today - delta_month))
+        sorted_resources = sorted(resources, key=lambda r: r.hotness,
+                                  reverse=True)
+        return sorted_resources
 
     @classmethod
     def get_newest(cls):
         return cls.objects.order_by('-created_at')
+
+    @property
+    def hotness(self):
+        today = timezone.now()
+        d = today - self.created_at
+        return (30 - d.days) * self.number_of_reviews
 
 
 class Review(Timestampable, models.Model):
