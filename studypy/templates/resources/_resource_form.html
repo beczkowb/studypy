@@ -1,31 +1,31 @@
 <form action="{% url 'add_resource' %}" method="post">
     {% csrf_token %}
-    {% for error in form.non_field_errors %}
+    {% for error in resource_form.non_field_errors %}
         <div class="alert alert-danger" role="alert">{{ error }}</div>
     {% endfor %}
     <div class="form-group">
-        {% for error in form.url.errors %}
+        {% for error in resource_form.url.errors %}
             <div class="alert alert-danger" role="alert">{{ error }}</div>
         {% endfor %}
-        <label for="{{ form.url.id_for_label }}">Resource url</label>
+        <label for="{{ resource_form.url.id_for_label }}">Resource url</label>
         {{ resource_form.url }}
     </div>
     <div class="form-group">
-        {% for error in form.name.errors %}
+        {% for error in resource_form.name.errors %}
             <div class="alert alert-danger" role="alert">{{ error }}</div>
         {% endfor %}
-        <label for="{{ form.name.if_for_label }}">Resource name</label>
+        <label for="{{ resource_form.name.if_for_label }}">Resource name</label>
         {{ resource_form.name }}
     </div>
     <div class="form-group">
-        {% for error in form.description.errors %}
+        {% for error in resource_form.description.errors %}
             <div class="alert alert-danger" role="alert">{{ error }}</div>
         {% endfor %}
-        <label for="{{ form.description.id_for_label }}">Description</label>
+        <label for="{{ resource_form.description.id_for_label }}">Description</label>
         {{ resource_form.description }}
     </div>
     <div class="form-group hidden">
-        <label for="{{ form.added_by.id_for_label }}">User</label>
+        <label for="{{ resource_form.added_by.id_for_label }}">User</label>
         {{ resource_form.added_by }}
     </div>
     <button type="submit" class="btn btn-default">Add resource</button>

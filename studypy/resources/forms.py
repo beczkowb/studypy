@@ -26,6 +26,17 @@ class ResourceForm(forms.ModelForm):
         }
 
 
+class UpdateResourceForm(forms.ModelForm):
+    class Meta:
+        fields = ('url', 'name', 'description')
+        model = Resource
+        widgets = {
+            'url': forms.URLInput(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+
+
 class ResourceFilterForm(forms.Form):
     tags = forms.ModelMultipleChoiceField(queryset=ResourceTag.objects.all(),
                                           widget=Select2MultipleWidget())

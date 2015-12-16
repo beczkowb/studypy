@@ -1,0 +1,12 @@
+{% extends '__base.html' %}
+
+{% block body %}
+    <div class="container">
+        {% include 'users/_profile_nav.html' with added_resources='active' %}
+        <br>
+        <br>
+        <div class="container">
+            {% include 'resources/_resource_list.html' with resources=resources %}
+        </div>
+    </div>
+{% endblock body %}

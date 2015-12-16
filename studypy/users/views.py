@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout as logout_user
 from django.views.decorators.http import require_http_methods
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, ListView
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse_lazy
 
 from braces.views import LoginRequiredMixin
 
+from resources.models import Resource
 from .forms import LoginForm, UserProfileForm
 
 
@@ -40,3 +41,13 @@ class UserProfile(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class UserAddedResources(LoginRequiredMixin, ListView):
+    model = Resource
+    template_name = 'users/user_added_resources.html'
+    context_object_name = 'resources'
+
+    def get_queryset(self):
+        return Resource.objects.filter(added_by=self.request.user)
+

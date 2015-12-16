@@ -1,9 +1,10 @@
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.conf import settings
 from django.core.urlresolvers import reverse_lazy
+from django.http import Http404
 
 from .models import Resource, ResourceTag, Review
-from .forms import ResourceForm, ResourceFilterForm, ReviewForm
+from .forms import ResourceForm, ResourceFilterForm, ReviewForm, UpdateResourceForm
 
 
 class NewestResources(ListView):
@@ -115,4 +116,21 @@ class AddReview(CreateView):
         return kwargs
 
     def get_success_url(self):
-        return reverse_lazy('resource_reviews', kwargs={'pk': self.kwargs['pk']})
+        return reverse_lazy('resource_reviews',
+                            kwargs={'pk': self.kwargs['pk']})
+
+
+class UpdateResource(UpdateView):
+    model = Resource
+    form_class = UpdateResourceForm
+    template_name = 'resources/update_resource.html'
+    context_object_name = 'form'
+    success_url = reverse_lazy('user_resources')
+
+    def get(self, request, *args, **kwargs):
+        resource_pk = kwargs['pk']
+        resource = Resource.objects.get(pk=resource_pk)
+        resource_was_added_by_user = resource.added_by == request.user
+        if not resource_was_added_by_user:
+            raise Http404
+        return super(UpdateResource, self).get(request, *args, **kwargs)
