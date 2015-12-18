@@ -2,7 +2,9 @@
     <div class="panel-heading">
         <h3 class="panel-title">
             <strong>{{ resource.name }}</strong> ({{ resource.rating }}/5)
-            <a class="btn btn-warning" href="{% url 'update_resource' pk=resource.pk %}">Edit</a>
+            {% if edit_resource_button %}
+                <a class="btn btn-warning" href="{% url 'update_resource' pk=resource.pk %}">Edit</a>
+            {% endif %}
             <strong>
                 <a class="pull-right" href="{{ resource.url }}">
                     Go to resource

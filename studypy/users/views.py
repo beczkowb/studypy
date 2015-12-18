@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse_lazy
 
 from braces.views import LoginRequiredMixin
 
-from resources.models import Resource
+from resources.models import Resource, Review
 from .forms import LoginForm, UserProfileForm
 
 
@@ -50,4 +50,13 @@ class UserAddedResources(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Resource.objects.filter(added_by=self.request.user)
+
+
+class UserAddedReviews(LoginRequiredMixin, ListView):
+    model = Resource
+    template_name = 'users/user_added_reviews.html'
+    context_object_name = 'reviews'
+
+    def get_queryset(self):
+        return Review.objects.filter(author=self.request.user)
 

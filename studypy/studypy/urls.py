@@ -14,6 +14,8 @@ urlpatterns = [
     url(r'^profile/$', users_views.UserProfile.as_view(), name='profile'),
     url(r'^profile/resources$', users_views.UserAddedResources.as_view(),
         name='user_resources'),
+    url(r'^profile/reviews$', users_views.UserAddedReviews.as_view(),
+        name='user_reviews'),
 
     url(r"^select2/", include("django_select2.urls"))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
