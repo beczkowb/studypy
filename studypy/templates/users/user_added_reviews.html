@@ -8,18 +8,7 @@
 
         <div class="container">
             {% for review in reviews %}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3>{{ review.resource.name }}</h3>
-                        <strong>{{ review.mark }}/5</strong>
-                        at {{ review.created_at|date }}
-                        <a class="btn btn-warning"
-                           href="{% url 'update_review' pk=review.pk %}">Edit</a>
-                    </div>
-                    <div class="panel-body">
-                        {{ review.contents }}
-                    </div>
-                </div>
+                {% include 'resources/_review_panel.html' with show_edit_button=True show_resource_name=True review=review %}
             {% endfor %}
         </div>
     </div>

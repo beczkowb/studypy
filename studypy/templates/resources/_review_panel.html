@@ -1,8 +1,15 @@
 <div class="panel panel-default">
     <div class="panel-heading">
+        {% if show_resource_name %}
+            <h3>{{ review.resource.name }}</h3>
+        {% endif %}
         <strong>{{ review.mark }}/5</strong>
         Added by: {{ review.author }}
         at {{ review.created_at|date }}
+        {% if show_edit_button %}
+            <a class="btn btn-warning"
+               href="{% url 'update_review' pk=review.pk %}">Edit</a>
+        {% endif %}
     </div>
     <div class="panel-body">
         {{ review.contents }}
