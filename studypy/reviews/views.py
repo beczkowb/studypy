@@ -34,5 +34,5 @@ class AddReview(CreateView):
         return kwargs
 
     def get_success_url(self):
-        return reverse_lazy('resource_reviews',
+        return reverse_lazy('resource_details',
                             kwargs={'pk': self.kwargs['pk']})

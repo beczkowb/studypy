@@ -2,13 +2,13 @@
     <div class="masthead">
         <ul class="nav nav-tabs pull-right">
             <li class="{{ hot }}">
-                <a href="">Hot</a>
+                <a href="{% url 'hot' %}">Hot</a>
             </li>
             <li class="{{ top_rated }}">
                 <a href="">Top rated</a>
             </li>
             <li class="{{ newest }}">
-                <a href="">Newest</a>
+                <a href="{% url 'newest' %}">Newest</a>
             </li>
         </ul>
 
