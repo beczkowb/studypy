@@ -4,16 +4,7 @@
         {% include 'resources/_second_nav.html' with show_resources_button=True show_add_resource_button=True show_tags_button=True show_add_review_button=True resource_pk=resource.pk %}
         {% include 'resources/_resource_panel.html' with resource=resource %}
         {% for review in resource.reviews.all %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <strong>{{ review.mark }}/5</strong>
-                    Added by: {{ review.author }}
-                    at {{ review.created_at|date }}
-                </div>
-                <div class="panel-body">
-                    {{ review.contents }}
-                </div>
-            </div>
+            {% include 'resources/_review_panel.html' with review=review %}
         {% endfor %}
     </div>
 {% endblock body %}

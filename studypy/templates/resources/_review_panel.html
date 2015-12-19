@@ -1,0 +1,10 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong>{{ review.mark }}/5</strong>
+        Added by: {{ review.author }}
+        at {{ review.created_at|date }}
+    </div>
+    <div class="panel-body">
+        {{ review.contents }}
+    </div>
+</div>
