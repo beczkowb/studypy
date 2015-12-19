@@ -1,0 +1,33 @@
+{% extends '__base.html' %}
+
+{% block body %}
+    <div class="container">
+        {% include 'users/_profile_nav.html' with added_reviews='active' %}
+        <br>
+        <br>
+        <form action="" method="post">
+            {% csrf_token %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">{{ error }}</div>
+            {% endfor %}
+            <div class="form-group">
+                {% for error in form.contents.errors %}
+                    <div class="alert alert-danger"
+                         role="alert">{{ error }}</div>
+                {% endfor %}
+                <label for="{{ form.contents.id_for_label }}">Review contents</label>
+                {{ form.contents }}
+            </div>
+            <div class="form-group">
+                {% for error in form.mark.errors %}
+                    <div class="alert alert-danger"
+                         role="alert">{{ error }}</div>
+                {% endfor %}
+                <label for="{{ form.mark.if_for_label }}">Mark</label>
+                {{ form.mark }}
+            </div>
+            <button type="submit" class="btn btn-default">Update review
+            </button>
+        </form>
+    </div>
+{% endblock body %}

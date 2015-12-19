@@ -37,6 +37,15 @@ class UpdateResourceForm(forms.ModelForm):
         }
 
 
+class UpdateReviewForm(forms.ModelForm):
+    class Meta:
+        fields = ('contents',)
+        model = Review
+        widgets = {
+            'contents': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+
+
 class ResourceFilterForm(forms.Form):
     tags = forms.ModelMultipleChoiceField(queryset=ResourceTag.objects.all(),
                                           widget=Select2MultipleWidget())

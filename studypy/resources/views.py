@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
 
 from .models import Resource, ResourceTag, Review
-from .forms import ResourceForm, ResourceFilterForm, ReviewForm, UpdateResourceForm
+from .forms import ResourceForm, ResourceFilterForm, ReviewForm, UpdateResourceForm, UpdateReviewForm
 
 
 class NewestResources(ListView):
@@ -134,3 +134,19 @@ class UpdateResource(UpdateView):
         if not resource_was_added_by_user:
             raise Http404
         return super(UpdateResource, self).get(request, *args, **kwargs)
+
+
+class UpdateReview(UpdateView):
+    model = Review
+    form_class = UpdateReviewForm
+    template_name = 'resources/update_review.html'
+    context_object_name = 'form'
+    success_url = reverse_lazy('user_reviews')
+
+    def get(self, request, *args, **kwargs):
+        review_pk = kwargs['pk']
+        review = Review.objects.get(pk=review_pk)
+        review_was_added_by_user = review.author == request.user
+        if not review_was_added_by_user:
+            raise Http404
+        return super(UpdateReview, self).get(request, *args, **kwargs)

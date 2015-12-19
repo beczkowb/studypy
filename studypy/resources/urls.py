@@ -13,4 +13,5 @@ urlpatterns = [
         name='add_review'),
     url('(?P<pk>\d+)/edit$', views.UpdateResource.as_view(),
         name='update_resource'),
+
 ]
