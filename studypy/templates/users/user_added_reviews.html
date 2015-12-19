@@ -8,7 +8,7 @@
 
         <div class="container">
             {% for review in reviews %}
-                {% include 'resources/_review_panel.html' with show_edit_button=True show_resource_name=True review=review %}
+                {% include 'resources/../reviews/_review_panel.html' with show_edit_button=True show_resource_name=True review=review %}
             {% endfor %}
         </div>
     </div>

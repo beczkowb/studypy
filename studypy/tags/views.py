@@ -6,7 +6,7 @@ from .models import Tag
 
 class Tags(ListView):
     model = Tag
-    template_name = 'resources/tags.html'
+    template_name = 'tags/tags.html'
     context_object_name = 'tags'
     paginate_by = settings.TAGS_PER_PAGE
     queryset = Tag.get_tags_sorted_by_number_of_resources()

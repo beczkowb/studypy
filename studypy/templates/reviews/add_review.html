@@ -1,0 +1,7 @@
+{% extends '__base.html' %}
+{% block body %}
+<div class="container">
+    {% include '_second_nav.html' with show_resources_button=True %}
+    {% include 'reviews/_review_form.html' with form=form %}
+</div>
+{% endblock body %}

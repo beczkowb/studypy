@@ -86,7 +86,7 @@ class AddResource(CreateView):
 
 class ResourceDetails(DetailView):
     model = Resource
-    template_name = 'resources/resource_reviews.html'
+    template_name = 'resources/resource_details.html'
     context_object_name = 'resource'
 
 

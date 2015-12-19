@@ -9,7 +9,7 @@ from resources.models import Resource, Review
 class UpdateReview(UpdateView):
     model = Review
     form_class = UpdateReviewForm
-    template_name = 'resources/update_review.html'
+    template_name = 'reviews/update_review.html'
     context_object_name = 'form'
     success_url = reverse_lazy('user_reviews')
 
@@ -24,7 +24,7 @@ class UpdateReview(UpdateView):
 
 class AddReview(CreateView):
     model = Review
-    template_name = 'resources/add_review.html'
+    template_name = 'reviews/add_review.html'
     form_class = ReviewForm
 
     def get_form_kwargs(self):
