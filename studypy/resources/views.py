@@ -4,6 +4,8 @@ from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
 from django.contrib.messages.views import SuccessMessageMixin
 
+from braces.views import LoginRequiredMixin
+
 from tags.models import Tag
 from .models import Resource
 from .forms import ResourceFilterForm, ResourceForm, UpdateResourceForm
@@ -73,7 +75,7 @@ class HotResources(ListView):
         return context
 
 
-class AddResource(SuccessMessageMixin, CreateView):
+class AddResource(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Resource
     template_name = 'resources/add_resource.html'
     form_class = ResourceForm
@@ -92,7 +94,7 @@ class ResourceDetails(DetailView):
     context_object_name = 'resource'
 
 
-class UpdateResource(SuccessMessageMixin, UpdateView):
+class UpdateResource(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Resource
     form_class = UpdateResourceForm
     template_name = 'resources/update_resource.html'

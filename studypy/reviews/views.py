@@ -3,12 +3,13 @@ from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
 from django.contrib.messages.views import SuccessMessageMixin
 
+from braces.views import LoginRequiredMixin
 
 from .forms import UpdateReviewForm, ReviewForm
 from resources.models import Resource, Review
 
 
-class UpdateReview(SuccessMessageMixin, UpdateView):
+class UpdateReview(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Review
     form_class = UpdateReviewForm
     template_name = 'reviews/update_review.html'
@@ -25,7 +26,7 @@ class UpdateReview(SuccessMessageMixin, UpdateView):
         return super(UpdateReview, self).get(request, *args, **kwargs)
 
 
-class AddReview(SuccessMessageMixin, CreateView):
+class AddReview(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Review
     template_name = 'reviews/add_review.html'
     form_class = ReviewForm
