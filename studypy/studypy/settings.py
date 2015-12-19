@@ -22,6 +22,9 @@ INSTALLED_APPS = (
     'django_select2',
 
     'resources',
+    'reviews',
+    'comments',
+    'tags',
     'users',
     'utils',
 )

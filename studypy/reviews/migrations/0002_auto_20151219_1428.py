@@ -9,23 +9,23 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('resources', '0001_initial'),
+        ('reviews', '0001_initial'),
+        ('resources', '0002_auto_20151219_1428'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='review',
             name='author',
-            field=models.ForeignKey(verbose_name='author', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, verbose_name='author'),
         ),
         migrations.AddField(
             model_name='review',
             name='resource',
-            field=models.ForeignKey(verbose_name='resource', to='resources.Resource'),
+            field=models.ForeignKey(to='resources.Resource', related_name='reviews', verbose_name='resource'),
         ),
-        migrations.AddField(
-            model_name='resource',
-            name='added_by',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
+        migrations.AlterUniqueTogether(
+            name='review',
+            unique_together=set([('resource', 'author')]),
         ),
     ]

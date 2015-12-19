@@ -1,7 +1,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">
-            <strong>{{ resource.name }}</strong> ({{ resource.rating }}/5)
+            <strong>{{ resource.name }}</strong> ({{ resource.avg_mark }}/5)
             {% if edit_resource_button %}
                 <a class="btn btn-warning" href="{% url 'update_resource' pk=resource.pk %}">Edit</a>
             {% endif %}
@@ -24,7 +24,7 @@
     </div>
     <div class="panel-footer">
         <p class="pull-right">
-            <a href="{% url 'resource_reviews' pk=resource.pk %}">Reviews
+            <a href="{% url 'resource_details' pk=resource.pk %}">Reviews
                 ({{ resource.number_of_reviews }})</a>
         </p>
 

@@ -13,6 +13,8 @@
                         <h3>{{ review.resource.name }}</h3>
                         <strong>{{ review.mark }}/5</strong>
                         at {{ review.created_at|date }}
+                        <a class="btn btn-warning"
+                           href="{% url 'update_review' pk=review.pk %}">Edit</a>
                     </div>
                     <div class="panel-body">
                         {{ review.contents }}

@@ -1,10 +1,11 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DetailView
 from django.conf import settings
 from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
 
-from .models import Resource, ResourceTag, Review
-from .forms import ResourceForm, ResourceFilterForm, ReviewForm, UpdateResourceForm, UpdateReviewForm
+from tags.models import Tag
+from .models import Resource
+from .forms import ResourceFilterForm, ResourceForm, UpdateResourceForm
 
 
 class NewestResources(ListView):
@@ -32,7 +33,7 @@ class NewestResources(ListView):
         context = super(NewestResources, self).get_context_data(**kwargs)
         if self.request.GET and 'tags' in self.request.GET:
             tags = self.request.GET.getlist('tags')
-            context['filter_form'] = ResourceFilterForm(initial={'tags': ResourceTag.objects.filter(id__in=tags)})
+            context['filter_form'] = ResourceFilterForm(initial={'tags': Tag.objects.filter(id__in=tags)})
         else:
             context['filter_form'] = ResourceFilterForm()
 
@@ -64,32 +65,11 @@ class HotResources(ListView):
         context = super(HotResources, self).get_context_data(**kwargs)
         if self.request.GET and 'tags' in self.request.GET:
             tags = self.request.GET.getlist('tags')
-            context['filter_form'] = ResourceFilterForm(initial={'tags': ResourceTag.objects.filter(id__in=tags)})
+            context['filter_form'] = ResourceFilterForm(initial={'tags': Tag.objects.filter(id__in=tags)})
         else:
             context['filter_form'] = ResourceFilterForm()
 
         return context
-
-
-class Tags(ListView):
-    model = ResourceTag
-    template_name = 'resources/tags.html'
-    context_object_name = 'tags'
-    paginate_by = settings.TAGS_PER_PAGE
-    queryset = ResourceTag.get_tags_sorted_by_number_of_resources()
-
-    def get_context_data(self, **kwargs):
-        context = super(Tags, self).get_context_data(**kwargs)
-        tags = context['tags']
-        context['tags_grid'] = ResourceTag.get_tags_grid(tags,
-                                                         settings.TAGS_PER_ROW)
-        return context
-
-
-class ResourceReviews(DetailView):
-    model = Resource
-    template_name = 'resources/resource_reviews.html'
-    context_object_name = 'resource'
 
 
 class AddResource(CreateView):
@@ -104,20 +84,10 @@ class AddResource(CreateView):
         return kwargs
 
 
-class AddReview(CreateView):
-    model = Review
-    template_name = 'resources/add_review.html'
-    form_class = ReviewForm
-
-    def get_form_kwargs(self):
-        kwargs = super(AddReview, self).get_form_kwargs()
-        kwargs['author'] = self.request.user
-        kwargs['resource'] = Resource.objects.get(pk=self.kwargs['pk'])
-        return kwargs
-
-    def get_success_url(self):
-        return reverse_lazy('resource_reviews',
-                            kwargs={'pk': self.kwargs['pk']})
+class ResourceDetails(DetailView):
+    model = Resource
+    template_name = 'resources/resource_reviews.html'
+    context_object_name = 'resource'
 
 
 class UpdateResource(UpdateView):
@@ -134,19 +104,3 @@ class UpdateResource(UpdateView):
         if not resource_was_added_by_user:
             raise Http404
         return super(UpdateResource, self).get(request, *args, **kwargs)
-
-
-class UpdateReview(UpdateView):
-    model = Review
-    form_class = UpdateReviewForm
-    template_name = 'resources/update_review.html'
-    context_object_name = 'form'
-    success_url = reverse_lazy('user_reviews')
-
-    def get(self, request, *args, **kwargs):
-        review_pk = kwargs['pk']
-        review = Review.objects.get(pk=review_pk)
-        review_was_added_by_user = review.author == request.user
-        if not review_was_added_by_user:
-            raise Http404
-        return super(UpdateReview, self).get(request, *args, **kwargs)
