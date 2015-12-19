@@ -2,6 +2,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DetailView
 from django.conf import settings
 from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
+from django.contrib.messages.views import SuccessMessageMixin
 
 from tags.models import Tag
 from .models import Resource
@@ -72,11 +73,12 @@ class HotResources(ListView):
         return context
 
 
-class AddResource(CreateView):
+class AddResource(SuccessMessageMixin, CreateView):
     model = Resource
     template_name = 'resources/add_resource.html'
     form_class = ResourceForm
     success_url = reverse_lazy('newest')
+    success_message = "Resource added successfully"
 
     def get_form_kwargs(self):
         kwargs = super(AddResource, self).get_form_kwargs()
@@ -90,12 +92,13 @@ class ResourceDetails(DetailView):
     context_object_name = 'resource'
 
 
-class UpdateResource(UpdateView):
+class UpdateResource(SuccessMessageMixin, UpdateView):
     model = Resource
     form_class = UpdateResourceForm
     template_name = 'resources/update_resource.html'
     context_object_name = 'form'
     success_url = reverse_lazy('user_resources')
+    success_message = 'Resource updated successfully'
 
     def get(self, request, *args, **kwargs):
         resource_pk = kwargs['pk']

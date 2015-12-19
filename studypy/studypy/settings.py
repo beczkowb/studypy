@@ -1,4 +1,6 @@
 import os
+from django.contrib.messages import constants as messages
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.dirname(BASE_DIR)
@@ -111,3 +113,10 @@ TAGS_PER_ROW = 6  # max 12
 TAGS_PER_PAGE = 60
 
 NEWS_PER_PAGE = 5
+
+MESSAGE_TAGS = {
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-error',
+}
