@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth.forms import UserCreationForm
 
 
 class LoginForm(forms.Form):
@@ -14,7 +15,8 @@ class LoginForm(forms.Form):
         user = authenticate(username=username, password=password)
         self.user = user
         if not user:
-            raise forms.ValidationError("Invalid credentials, please try again")
+            raise forms.ValidationError(
+                "Invalid credentials, please try again")
 
     def login(self, request):
         username = self.cleaned_data['username']
@@ -30,4 +32,22 @@ class UserProfileForm(forms.ModelForm):
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
+        }
+
+
+class RegisterForm(UserCreationForm):
+    password1 = forms.CharField(label="Password",
+                                widget=forms.PasswordInput(attrs={
+                                    'class': 'form-control'}))
+    password2 = forms.CharField(label="Password confirmation",
+                                widget=forms.PasswordInput(attrs={
+                                    'class': 'form-control'}),
+                                help_text="Enter the same password as above, for verification.")
+
+    class Meta:
+        model = get_user_model()
+        fields = ('email', 'username',)
+        widgets = {
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
         }

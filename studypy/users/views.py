@@ -1,14 +1,22 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout as logout_user
 from django.views.decorators.http import require_http_methods
-from django.views.generic import UpdateView, ListView
+from django.views.generic import UpdateView, ListView, CreateView
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
 
 from braces.views import LoginRequiredMixin
 
 from resources.models import Resource, Review
-from .forms import LoginForm, UserProfileForm
+from .forms import LoginForm, UserProfileForm, RegisterForm
+
+
+class Register(SuccessMessageMixin, CreateView):
+    template_name = 'users/register.html'
+    form_class = RegisterForm
+    success_url = reverse_lazy('newest')
+    success_message = 'Thank you for registration! You can now log in.'
 
 
 @require_http_methods(["GET", "POST"])
