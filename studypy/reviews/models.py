@@ -16,7 +16,7 @@ class Review(Timestampable, models.Model):
     resource = models.ForeignKey('resources.Resource', verbose_name='resource',
                                  related_name='reviews')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='author')
-    contents = models.TextField('contents')
+    contents = models.TextField('contents', blank=True)
     mark = models.PositiveIntegerField('mark', choices=MARK_CHOICES)
 
     class Meta:
