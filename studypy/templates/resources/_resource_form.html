@@ -14,7 +14,8 @@
         {% for error in resource_form.name.errors %}
             <div class="alert alert-danger" role="alert">{{ error }}</div>
         {% endfor %}
-        <label for="{{ resource_form.name.if_for_label }}">Resource name</label>
+        <label for="{{ resource_form.name.if_for_label }}">Resource
+            name</label>
         {{ resource_form.name }}
     </div>
     <div class="form-group">
@@ -23,6 +24,13 @@
         {% endfor %}
         <label for="{{ resource_form.description.id_for_label }}">Description</label>
         {{ resource_form.description }}
+    </div>
+    <div class="form-group">
+        {% for error in resource_form.tags.errors %}
+            <div class="alert alert-danger" role="alert">{{ error }}</div>
+        {% endfor %}
+        <label for="{{ resource_form.tags.id_for_label }}">Tags</label>
+        {{ resource_form.tags }}
     </div>
     <div class="form-group hidden">
         <label for="{{ resource_form.added_by.id_for_label }}">User</label>

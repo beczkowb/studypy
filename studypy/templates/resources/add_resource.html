@@ -6,3 +6,8 @@
         {% include 'resources/_resource_form.html' with resource_form=form %}
     </div>
 {% endblock body %}
+
+{% block underbody %}
+    {{ block.super }}
+    {{ form.media }}
+{% endblock underbody %}

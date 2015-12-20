@@ -27,6 +27,13 @@
         <label for="{{ form.description.id_for_label }}">Description</label>
         {{ form.description }}
     </div>
+    <div class="form-group">
+        {% for error in form.tags.errors %}
+            <div class="alert alert-danger" role="alert">{{ error }}</div>
+        {% endfor %}
+        <label for="{{ form.tags.id_for_label }}">Tags</label>
+        {{ form.tags }}
+    </div>
     <button type="submit" class="btn btn-default">Update resource
     </button>
 </form>

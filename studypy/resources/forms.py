@@ -19,29 +19,38 @@ class ResourceForm(forms.ModelForm):
             raise forms.ValidationError("Dont change hidden fields")
 
     class Meta:
-        fields = ('url', 'name', 'description', 'added_by')
+        fields = ('url', 'name', 'description', 'tags', 'added_by')
         model = Resource
         widgets = {
             'url': forms.URLInput(attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'tags': Select2MultipleWidget(attrs={'class': 'form-control'}),
         }
+
+    class Media:
+        js = ('js/resources/filter-form.js',)
 
 
 class UpdateResourceForm(forms.ModelForm):
     class Meta:
-        fields = ('url', 'name', 'description')
+        fields = ('url', 'name', 'description', 'tags')
         model = Resource
         widgets = {
             'url': forms.URLInput(attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'tags': Select2MultipleWidget(attrs={'class': 'form-control'}),
         }
+    class Media:
+        js = ('js/resources/filter-form.js',)
+
 
 
 class ResourceFilterForm(forms.Form):
     tags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all(),
-                                          widget=Select2MultipleWidget())
+                                          widget=Select2MultipleWidget(
+                                              attrs={'class': 'form-control'}))
 
     class Media:
-        js = ('js/resources/filter-form.js', )
+        js = ('js/resources/filter-form.js',)
