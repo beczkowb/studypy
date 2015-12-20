@@ -5,8 +5,13 @@
         {% include 'users/_profile_nav.html' with added_resources='active' %}
         <br>
         <br>
+
         <div class="container">
-            {% include 'resources/_resource_list.html' with resources=resources edit_resource_button=True %}
+            {% if resources %}
+                {% include 'resources/_resource_list.html' with resources=resources edit_resource_button=True %}
+            {% else %}
+                <h3 class="text-center">You have no resources.</h3>
+            {% endif %}
         </div>
     </div>
 {% endblock body %}

@@ -7,9 +7,13 @@
         <br>
 
         <div class="container">
+        {% if reviews %}
             {% for review in reviews %}
-                {% include 'resources/../reviews/_review_panel.html' with show_edit_button=True show_resource_name=True review=review %}
+                {% include 'reviews/_review_panel.html' with show_edit_button=True show_resource_name=True review=review %}
             {% endfor %}
+        {% else %}
+            <h3 class="text-center">You have no reviews.</h3>
+        {% endif %}
         </div>
     </div>
 {% endblock body %}
