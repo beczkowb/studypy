@@ -1,7 +1,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">
-            <strong>{{ resource.name }}</strong> ({{ resource.avg_mark }}/5)
+            <strong>{{ resource.name }}</strong> ({{ resource.avg_mark|floatformat }}/5)
             {% if edit_resource_button %}
                 <a class="btn btn-warning"
                    href="{% url 'update_resource' pk=resource.pk %}">Edit</a>
