@@ -18,7 +18,7 @@
     {% if comments %}
         {% for comment in comments %}
             <div class="row">
-                {% include 'comments/_resource_comment_panel.html' with comment=comment %}
+                {% include 'comments/_comment_panel.html' with comment=comment %}
             </div>
             <!-- /row -->
         {% endfor %}
