@@ -1,3 +1,5 @@
+/studypy/db.sqlite3
+/studypy/media
 __pycache__/
 *.iml
 /.idea

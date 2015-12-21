@@ -27,8 +27,9 @@
         <p class="pull-right">
             <a href="{% url 'resource_details' pk=resource.pk %}">Reviews
                 ({{ resource.number_of_reviews }})</a>
+            <a href="{% url 'resource_comments' pk=resource.pk %}">Comments
+                ({{ resource.number_of_comments }})</a>
         </p>
-
         <p>
             Added by: {{ resource.added_by }} at {{ resource.created_at|date }}
         </p>

@@ -48,6 +48,10 @@ class Resource(Timestampable, models.Model):
         return self.reviews.all().count()
 
     @property
+    def number_of_comments(self):
+        return self.comments.all().count()
+
+    @property
     def avg_mark(self):
         avg = self.reviews.all().aggregate(models.Avg('mark'))['mark__avg']
         return avg if avg else 0

@@ -1,0 +1,28 @@
+<div class="container">
+    {% if request.user.is_authenticated %}
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Add Comment</h3>
+                {% include 'comments/_resource_comment_form.html' with form=form %}
+            </div>
+            <!-- /col-sm-12 -->
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Comments</h3>
+        </div>
+        <!-- /col-sm-12 -->
+    </div>
+    <!-- /row -->
+    {% if comments %}
+        {% for comment in comments %}
+            <div class="row">
+                {% include 'comments/_resource_comment_panel.html' with comment=comment %}
+            </div>
+            <!-- /row -->
+        {% endfor %}
+    {% else %}
+        <p>There are no comments yet.</p>
+    {% endif %}
+</div><!-- /container -->

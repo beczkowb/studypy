@@ -42,9 +42,9 @@ class UpdateResourceForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control'}),
             'tags': Select2MultipleWidget(attrs={'class': 'form-control'}),
         }
+
     class Media:
         js = ('js/resources/filter-form.js',)
-
 
 
 class ResourceFilterForm(forms.Form):

@@ -1,0 +1,29 @@
+{% load static %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-sm-1">
+            <div class="thumbnail">
+                {% if request.user.image %}
+                    <img class="img-responsive user-photo"
+                         src="{{ request.user.image.url }}">
+                {% else %}
+                    <img class="img-responsive user-photo"
+                         src="{% static 'images/avatar.png' %}">
+                {% endif %}
+            </div>
+            <!-- /thumbnail -->
+        </div>
+        <!-- /col-sm-1 -->
+        <div class="col-sm-11">
+            {{ form.contents }}
+            {{ form.resource }}
+            {{ form.author }}
+            <br>
+            <button class="btn btn-success" type="submit">Add comment</button>
+        </div>
+        <!-- /col-sm-5 -->
+    </div>
+    <!-- /row -->
+</form>

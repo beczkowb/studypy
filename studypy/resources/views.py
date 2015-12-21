@@ -1,12 +1,14 @@
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
 from django.conf import settings
 from django.core.urlresolvers import reverse_lazy
-from django.http import Http404
+from django.http import Http404, HttpResponseNotAllowed
 from django.contrib.messages.views import SuccessMessageMixin
 
 from braces.views import LoginRequiredMixin
 
 from tags.models import Tag
+from comments.forms import ResourceCommentForm
+from comments.models import ResourceComment
 from .models import Resource
 from .forms import ResourceFilterForm, ResourceForm, UpdateResourceForm
 
@@ -92,6 +94,42 @@ class ResourceDetails(DetailView):
     model = Resource
     template_name = 'resources/resource_details.html'
     context_object_name = 'resource'
+
+
+class ResourceComments(SuccessMessageMixin, CreateView):
+    model = ResourceComment
+    template_name = 'resources/resource_comments.html'
+    form_class = ResourceCommentForm
+    success_message = 'Comment added successfully'
+
+    def get_initial(self):
+        initial = super(ResourceComments, self).get_initial()
+        if self.request.method == 'GET':
+            resource = Resource.objects.get(pk=self.kwargs['pk'])
+            author = self.request.user
+            initial = {'resource': resource, 'author': author}
+        return initial
+
+    def get_form_kwargs(self):
+        kwargs = super(ResourceComments, self).get_form_kwargs()
+        if self.request.method == 'POST':
+            resource = Resource.objects.get(pk=self.kwargs['pk'])
+            author = self.request.user
+            kwargs.update({'resource': resource, 'author': author})
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(ResourceComments, self).get_context_data(**kwargs)
+        context['resource'] = Resource.objects.get(pk=self.kwargs['pk'])
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('resource_comments', kwargs={'pk': self.kwargs['pk']})
+
+    def post(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated():
+            return HttpResponseNotAllowed
+        return super(ResourceComments, self).post(request, *args, **kwargs)
 
 
 class UpdateResource(LoginRequiredMixin, SuccessMessageMixin, UpdateView):

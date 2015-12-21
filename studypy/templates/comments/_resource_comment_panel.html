@@ -1,0 +1,32 @@
+{% load static %}
+<div class="row">
+    <div class="col-sm-1">
+        <div class="thumbnail">
+            {% if comment.author.image %}
+                <img class="img-responsive user-photo"
+                     src="{{ comment.author.image.url }}">
+            {% else %}
+                <img class="img-responsive user-photo"
+                     src="{% static 'images/avatar.png' %}">
+            {% endif %}
+        </div>
+        <!-- /thumbnail -->
+    </div>
+    <!-- /col-sm-1 -->
+
+    <div class="col-sm-11">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>{{ comment.author }}</strong> <span
+                    class="text-muted">{{ comment.created_at|date }}</span>
+            </div>
+            <div class="panel-body">
+                {{ comment.contents }}
+            </div>
+            <!-- /panel-body -->
+        </div>
+        <!-- /panel panel-default -->
+    </div>
+    <!-- /col-sm-5 -->
+</div>
+<!-- /row -->
