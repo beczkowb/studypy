@@ -18,7 +18,13 @@
         <!-- /col-sm-1 -->
         <div class="col-sm-11">
             {{ form.contents }}
-            {{ form.resource }}
+            {% if resource_comment_form %}
+                {{ form.resource }}
+            {% endif %}
+            {% if review_comment_form %}
+                {{ form.review }}
+            {% endif %}
+
             {{ form.author }}
             <br>
             <button class="btn btn-success" type="submit">Add comment</button>
