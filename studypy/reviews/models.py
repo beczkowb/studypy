@@ -22,6 +22,10 @@ class Review(Timestampable, models.Model):
     class Meta:
         unique_together = (('resource', 'author'),)
 
+    @property
+    def number_of_comments(self):
+        return self.comments.all().count()
+
     def __str__(self):
         return '{resource}=>{author}({mark})'.format(resource=self.resource,
                                                      author=self.author,

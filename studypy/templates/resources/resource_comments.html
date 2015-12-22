@@ -6,9 +6,9 @@
         {% include '_second_nav.html' with show_resources_button=True show_add_resource_button=True show_tags_button=True show_add_review_button=True resource_pk=resource.pk %}
         {% include 'resources/_resource_panel.html' with resource=resource %}
     </div>
-    {% include 'comments/_resource_comment_list.html' with comments=resource.comments.all form=form %}
+    {% include 'comments/_comment_list.html' with comments=resource.comments.all form=form resource_comment_form=True %}
 {% endblock body %}
 
 {% block extrahead %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/resource-comments.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/comments.css' %}">
 {% endblock extrahead %}

@@ -1,0 +1,14 @@
+{% extends '__base.html' %}
+{% load static %}
+
+{% block body %}
+    <div class="container">
+        {% include '_second_nav.html' with show_resources_button=True show_add_resource_button=True show_tags_button=True %}
+        {% include 'reviews/_review_panel.html' %}
+    </div>
+    {% include 'comments/_comment_list.html' with comments=review.comments.all form=form review_comment_form=True %}
+{% endblock body %}
+
+{% block extrahead %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/comments.css' %}">
+{% endblock extrahead %}

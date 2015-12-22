@@ -6,6 +6,7 @@
         <strong>{{ review.mark }}/5</strong>
         Added by: {{ review.author }}
         at {{ review.created_at|date }}
+        <a href="{% url 'review_comments' pk=review.pk %}">Comments({{ review.number_of_comments }})</a>
         {% if show_edit_button %}
             <a class="btn btn-warning"
                href="{% url 'update_review' pk=review.pk %}">Edit</a>
