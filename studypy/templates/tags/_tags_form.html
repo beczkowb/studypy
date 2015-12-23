@@ -1,0 +1,9 @@
+<form method="post" action="" class="form-horizontal">
+    {% csrf_token %}
+    {% for error in form.name.errors %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+    {% endfor %}
+    {{ form.name }}
+    <button type="submit" class="btn btn-success">Add tag</button>
+</form>
+<br>

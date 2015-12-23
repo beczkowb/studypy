@@ -1,19 +1,30 @@
-from django.views.generic import ListView
 from django.conf import settings
+from django.views.generic import View
+from django.shortcuts import render
+from django.http import HttpResponseNotAllowed
 
 from .models import Tag
+from .forms import TagForm
 
 
-class Tags(ListView):
-    model = Tag
-    template_name = 'tags/tags.html'
-    context_object_name = 'tags'
-    paginate_by = settings.TAGS_PER_PAGE
-    queryset = Tag.get_tags_sorted_by_number_of_resources()
-
-    def get_context_data(self, **kwargs):
-        context = super(Tags, self).get_context_data(**kwargs)
-        tags = context['tags']
+class Tags(View):
+    def get(self, request, *args, **kwargs):
+        context = {}
+        tags = Tag.get_tags_sorted_by_number_of_resources()
         context['tags_grid'] = Tag.get_tags_grid(tags, settings.TAGS_PER_ROW)
-        return context
+        tag_form = TagForm()
+        context['form'] = tag_form
+        return render(request, 'tags/tags.html', context)
 
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            return HttpResponseNotAllowed()
+        context = {}
+        tag_form = TagForm(request.POST)
+        if tag_form.is_valid():
+            tag_form.save()
+            tag_form = TagForm()
+        context['form'] = tag_form
+        tags = Tag.get_tags_sorted_by_number_of_resources()
+        context['tags_grid'] = Tag.get_tags_grid(tags, settings.TAGS_PER_ROW)
+        return render(request, 'tags/tags.html', context)
