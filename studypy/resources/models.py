@@ -55,3 +55,7 @@ class Resource(Timestampable, models.Model):
     def avg_mark(self):
         avg = self.reviews.all().aggregate(models.Avg('mark'))['mark__avg']
         return avg if avg else 0
+
+    @property
+    def get_top_rated(self):
+        return None
