@@ -8,6 +8,6 @@ urlpatterns = [
     url('hot/$', views.HotResources.as_view(), name='hot'),
     url('(?P<slug>[-\w\d]+)/$', views.ResourceDetails.as_view(),
         name='resource_details'),
-    url('(?P<slug>[-\w\d]+)/comments$', views.ResourceComments.as_view(),
+    url('(?P<pk>\d+)/comments$', views.ResourceComments.as_view(),
         name='resource_comments'),
 ]
