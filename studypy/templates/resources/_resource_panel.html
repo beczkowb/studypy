@@ -25,7 +25,7 @@
     </div>
     <div class="panel-footer">
         <p class="pull-right">
-            <a href="{% url 'resource_details' pk=resource.pk %}">Reviews
+            <a href="{% url 'resource_details' slug=resource.slug %}">Reviews
                 ({{ resource.number_of_reviews }})</a>
             <a href="{% url 'resource_comments' pk=resource.pk %}">Comments
                 ({{ resource.number_of_comments }})</a>

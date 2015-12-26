@@ -95,6 +95,15 @@ class ResourceDetails(DetailView):
     template_name = 'resources/resource_details.html'
     context_object_name = 'resource'
 
+    def get_object(self, queryset=None):
+        try:
+            resource_pk = self.kwargs['slug'].split('-')[-1]
+            return self.model.objects.get(pk=resource_pk)
+        except self.model.DoesNotExist:
+            raise Http404
+        except KeyError:
+            raise Http404
+
 
 class ResourceComments(SuccessMessageMixin, CreateView):
     model = ResourceComment

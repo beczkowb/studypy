@@ -7,6 +7,8 @@ from django.utils import timezone
 from utils.models import Timestampable
 from reviews.models import Review
 
+from django.utils.text import slugify
+
 
 class Resource(Timestampable, models.Model):
     name = models.CharField('name', unique=True, max_length=50)
@@ -14,15 +16,27 @@ class Resource(Timestampable, models.Model):
     description = models.CharField('description', max_length=2000)
     tags = models.ManyToManyField('tags.Tag', verbose_name='tags',
                                   related_name='resources')
-
     added_by = models.ForeignKey(settings.AUTH_USER_MODEL)
+    slug = models.SlugField(max_length=50, blank=True, unique=True)
 
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            super(Resource, self).save(*args, **kwargs)
+            self.refresh_slug()
+        super(Resource, self).save(*args, **kwargs)
+
     def add_review(self, author, contents, mark):
         Review.objects.create(resource=self, author=author, mark=mark,
                               contents=contents)
+
+    def refresh_slug(self):
+        slugified_name = '{slug}-{pk}'.format(slug=slugify(self.name),
+                                              pk=self.pk)
+        self.slug = slugified_name
+        self.save()
 
     @classmethod
     def get_hot(cls):
