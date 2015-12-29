@@ -57,5 +57,21 @@ class Resource(Timestampable, models.Model):
         return avg if avg else 0
 
     @property
-    def get_top_rated(self):
-        return None
+    def rating(self):
+        s = self.avg_mark
+        g = self.number_of_reviews
+        m = 10
+        S = self.avg_mark_of_all_resources()
+        return (g / (g+m))*s + (m / (g+m)) * S
+
+    @classmethod
+    def get_top_rated(cls):
+        return sorted(cls.objects.all(), key=lambda r: r.rating, reverse=True)
+
+    @classmethod
+    def avg_mark_of_all_resources(cls):
+        return sum([r.avg_mark for r in cls.objects.all()]) / cls.number_of_resources()
+
+    @classmethod
+    def number_of_resources(cls):
+        return cls.objects.count()
