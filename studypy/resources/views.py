@@ -79,7 +79,7 @@ class HotResources(ListView):
 
 class TopRatedResources(ListView):
     model = Resource
-    template_name = 'resources/hot_resources.html'
+    template_name = 'resources/top_rated_resources.html'
     context_object_name = 'resources'
     queryset = Resource.get_top_rated()
     paginate_by = settings.NEWS_PER_PAGE
