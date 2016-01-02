@@ -13,15 +13,24 @@ from .models import Resource
 from .forms import ResourceFilterForm, ResourceForm, UpdateResourceForm
 
 
-class NewestResources(ListView):
+class Resources(ListView):
     model = Resource
-    template_name = 'resources/newest_resources.html'
+    template_name = 'resources/resources.html'
     context_object_name = 'resources'
-    queryset = Resource.get_newest()
     paginate_by = settings.NEWS_PER_PAGE
+    resource_list_type = None
+    resource_querysets = {
+        'hot': Resource.get_hot(),
+        'newest': Resource.get_newest(),
+        'top_rated': Resource.get_top_rated(),
+    }
 
     def get_queryset(self):
-        queryset = super(NewestResources, self).get_queryset()
+        queryset = self.resource_querysets[self.resource_list_type]
+        self.filter_queryset_by_tags(queryset)
+        return queryset
+
+    def filter_queryset_by_tags(self, queryset):
         if self.request.GET and 'tags' in self.request.GET:
             tags = self.request.GET.getlist('tags')
             tags_set = set(tags)
@@ -32,79 +41,17 @@ class NewestResources(ListView):
                 if resource_tags_set.intersection(tags_set):
                     filtered_resources.append(resource)
             queryset = filtered_resources
-        return queryset
 
     def get_context_data(self, **kwargs):
-        context = super(NewestResources, self).get_context_data(**kwargs)
+        context = super(Resources, self).get_context_data(**kwargs)
         if self.request.GET and 'tags' in self.request.GET:
             tags = self.request.GET.getlist('tags')
             context['filter_form'] = ResourceFilterForm(initial={'tags': Tag.objects.filter(id__in=tags)})
         else:
             context['filter_form'] = ResourceFilterForm()
-
-        return context
-
-
-class HotResources(ListView):
-    model = Resource
-    template_name = 'resources/hot_resources.html'
-    context_object_name = 'resources'
-    queryset = Resource.get_hot()
-    paginate_by = settings.NEWS_PER_PAGE
-
-    def get_queryset(self):
-        queryset = super(HotResources, self).get_queryset()
-        if self.request.GET and 'tags' in self.request.GET:
-            tags = self.request.GET.getlist('tags')
-            tags_set = set(tags)
-            filtered_resources = []
-            for resource in queryset:
-                resource_tags = list([str(r.id) for r in resource.tags.all()])
-                resource_tags_set = set(resource_tags)
-                if resource_tags_set.intersection(tags_set):
-                    filtered_resources.append(resource)
-            queryset = filtered_resources
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super(HotResources, self).get_context_data(**kwargs)
-        if self.request.GET and 'tags' in self.request.GET:
-            tags = self.request.GET.getlist('tags')
-            context['filter_form'] = ResourceFilterForm(initial={'tags': Tag.objects.filter(id__in=tags)})
-        else:
-            context['filter_form'] = ResourceFilterForm()
-
-        return context
-
-
-class TopRatedResources(ListView):
-    model = Resource
-    template_name = 'resources/top_rated_resources.html'
-    context_object_name = 'resources'
-    queryset = Resource.get_top_rated()
-    paginate_by = settings.NEWS_PER_PAGE
-
-    def get_queryset(self):
-        queryset = super(TopRatedResources, self).get_queryset()
-        if self.request.GET and 'tags' in self.request.GET:
-            tags = self.request.GET.getlist('tags')
-            tags_set = set(tags)
-            filtered_resources = []
-            for resource in queryset:
-                resource_tags = list([str(r.id) for r in resource.tags.all()])
-                resource_tags_set = set(resource_tags)
-                if resource_tags_set.intersection(tags_set):
-                    filtered_resources.append(resource)
-            queryset = filtered_resources
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super(TopRatedResources, self).get_context_data(**kwargs)
-        if self.request.GET and 'tags' in self.request.GET:
-            tags = self.request.GET.getlist('tags')
-            context['filter_form'] = ResourceFilterForm(initial={'tags': Tag.objects.filter(id__in=tags)})
-        else:
-            context['filter_form'] = ResourceFilterForm()
+        context['hot'] = 'active' if self.resource_list_type == 'hot' else ''
+        context['top_rated'] = 'active' if self.resource_list_type == 'top_rated' else ''
+        context['newest'] = 'active' if self.resource_list_type == 'newest' else ''
         return context
 
 
