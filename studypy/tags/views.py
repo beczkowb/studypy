@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.views.generic import View
 from django.shortcuts import render
-from django.http import HttpResponseNotAllowed
+from django.http import HttpResponseBadRequest
 
 from .models import Tag
 from .forms import TagForm
@@ -18,7 +18,7 @@ class Tags(View):
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated():
-            return HttpResponseNotAllowed()
+            return HttpResponseBadRequest()
         context = {}
         tag_form = TagForm(request.POST)
         if tag_form.is_valid():
