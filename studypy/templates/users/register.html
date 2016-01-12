@@ -1,18 +1,6 @@
-{% load static %}
+{% extends '__base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>studypy</title>
-    <link rel="stylesheet" type="text/css"
-          href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" type="text/css"
-          href="{% static 'css/bootstrap-theme.css' %}">
-    <link rel="stylesheet" type="text/css"
-          href="{% static 'css/nav.css' %}">
-</head>
-<body>
+{% block body %}
 <div class="container">
     <div class="row">
         <div class="col-xs-6">
@@ -65,10 +53,8 @@
                 </div>
                 <button type="submit" class="btn btn-success">Sign up</button>
             </form>
+            <p><a href="{% url 'password_reset' %}">Reset password</a></p>
         </div>
     </div>
 </div>
-<script src="{% static 'js/jquery.js' %}"></script>
-<script src="{% static 'js/bootstrap.js' %}"></script>
-</body>
-</html>
+{% endblock body %}

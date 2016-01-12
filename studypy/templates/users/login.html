@@ -1,18 +1,4 @@
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>studypy</title>
-    <link rel="stylesheet" type="text/css"
-          href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" type="text/css"
-          href="{% static 'css/bootstrap-theme.css' %}">
-    <link rel="stylesheet" type="text/css"
-          href="{% static 'css/nav.css' %}">
-</head>
-<body>
+{% extends '__base.html' %}
 {% block body %}
     <div class="container">
         <br>
@@ -59,7 +45,3 @@
     </div>
 
 {% endblock body %}
-<script src="{% static 'js/jquery.js' %}"></script>
-<script src="{% static 'js/bootstrap.js' %}"></script>
-</body>
-</html>

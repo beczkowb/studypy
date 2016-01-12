@@ -41,19 +41,19 @@ class Resource(Timestampable, models.Model):
     def hotness(self):
         today = timezone.now()
         d = today - self.created_at
-        return (30 - d.days) * self.number_of_reviews
+        return (30 - d.days) * (self.number_of_reviews + self.number_of_comments)
 
     @property
     def number_of_reviews(self):
-        return self.reviews.all().count()
+        return self.reviews.count()
 
     @property
     def number_of_comments(self):
-        return self.comments.all().count()
+        return self.comments.count()
 
     @property
     def avg_mark(self):
-        avg = self.reviews.all().aggregate(models.Avg('mark'))['mark__avg']
+        avg = self.reviews.aggregate(models.Avg('mark'))['mark__avg']
         return avg if avg else 0
 
     @property
