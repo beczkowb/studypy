@@ -1,20 +1,12 @@
 {% extends '__base.html' %}
 {% block body %}
     <div class="container">
-        <br>
-        <br>
-        <br>
-
         <div class="row">
             <div class="col-xs-4">
-
             </div>
-            <!--
-                        -->
             <div class="col-xs-4">
                 <div class="panel panel-default">
-                                <div class="panel-heading"><h4>Login to Your Account</h4></div>
-
+                    <div class="panel-heading"><h4>Login to Your Account</h4></div>
                     <div class="panel-body">
                         {% for error in form.non_field_errors %}
                             <div class="alert alert-danger"
@@ -36,12 +28,8 @@
                     </div>
                 </div>
             </div>
-            <!--
-                        -->
             <div class="col-xs-4">
-
             </div>
         </div>
     </div>
-
 {% endblock body %}
