@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse_lazy
 from django.http import Http404, HttpResponseNotAllowed
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import redirect
 
 from braces.views import LoginRequiredMixin
 
@@ -125,3 +126,7 @@ class UpdateResource(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         if not resource_was_added_by_user:
             raise Http404
         return super(UpdateResource, self).get(request, *args, **kwargs)
+
+
+def index(request):
+    return redirect('newest')

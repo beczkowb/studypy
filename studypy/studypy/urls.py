@@ -6,10 +6,12 @@ from django.contrib.auth import views as auth_views
 
 from users import views as users_views
 from users import urls as users_urls
+from resources.views import index
 
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', index, name='index'),
     url(r'^resources/', include('resources.urls')),
     url(r'^reviews/', include('reviews.urls')),
     url(r'^tags/', include('tags.urls')),
