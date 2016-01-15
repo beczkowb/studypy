@@ -74,6 +74,19 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#             'NAME': 'studypy',
+#             'USER': 'studypy',
+#             'PASSWORD': 'studypy',
+#             'HOST': 'localhost',
+#             'PORT': 5432,
+#             'CHARSET': 'utf8',
+#             'USE_UNICODE': True,
+#         }
+# }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
