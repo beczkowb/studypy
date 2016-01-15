@@ -1,5 +1,9 @@
 <div class="container-narrow">
-    {% for resource in resources %}
-        {% include 'resources/_resource_panel.html' with resource=resource edit_resource_button=edit_resource_button %}
-    {% endfor %}
+    {% if resources %}
+        {% for resource in resources %}
+            {% include 'resources/_resource_panel.html' with resource=resource edit_resource_button=edit_resource_button %}
+        {% endfor %}
+    {% else %}
+        <p>There are no resources yet.</p>
+    {% endif %}
 </div>
