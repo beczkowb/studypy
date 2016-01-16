@@ -20,14 +20,15 @@ class Resources(ListView):
     context_object_name = 'resources'
     paginate_by = settings.NEWS_PER_PAGE
     resource_list_type = None
-    resource_querysets = {
-        'hot': Resource.get_hot(),
-        'newest': Resource.get_newest(),
-        'top_rated': Resource.get_top_rated(),
-    }
 
     def get_queryset(self):
-        queryset = self.resource_querysets[self.resource_list_type]
+        queryset = []
+        if self.resource_list_type == 'hot':
+            queryset = Resource.get_hot()
+        elif self.resource_list_type == 'newest':
+            queryset = Resource.get_newest()
+        elif self.resource_list_type == 'top_rated':
+            queryset = Resource.get_top_rated()
         self.filter_queryset_by_tags(queryset)
         return queryset
 
