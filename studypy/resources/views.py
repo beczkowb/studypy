@@ -29,7 +29,7 @@ class Resources(ListView):
             queryset = Resource.get_newest()
         elif self.resource_list_type == 'top_rated':
             queryset = Resource.get_top_rated()
-        self.filter_queryset_by_tags(queryset)
+        queryset = self.filter_queryset_by_tags(queryset)
         return queryset
 
     def filter_queryset_by_tags(self, queryset):
@@ -43,6 +43,7 @@ class Resources(ListView):
                 if resource_tags_set.intersection(tags_set):
                     filtered_resources.append(resource)
             queryset = filtered_resources
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super(Resources, self).get_context_data(**kwargs)
