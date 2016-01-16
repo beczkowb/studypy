@@ -11,7 +11,7 @@ class Tags(View):
     def get(self, request, *args, **kwargs):
         context = {}
         tags = Tag.get_tags_sorted_by_number_of_resources()
-        context['tags_grid'] = Tag.get_tags_grid(tags, Tag.objects.count())
+        context['tags_grid'] = Tag.get_tags_grid(tags, settings.TAGS_PER_ROW)
         tag_form = TagForm()
         context['form'] = tag_form
         return render(request, 'tags/tags.html', context)
