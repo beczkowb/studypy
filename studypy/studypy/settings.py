@@ -22,7 +22,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'django_select2',
-    'rest_framework',
 
     'resources',
     'reviews',
